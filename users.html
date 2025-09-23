@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add or Select User 🧍🏻🧍🏻‍♀️ • Water Tracker</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <!-- Background flourish -->
+  <div class="bg-bubbles"></div>
+
+  <div class="users-container">
+    <div class="users-top center-title">
+      <h2 class="users-title">Add or Select User 🧍🏻🧍🏻‍♀️</h2>
+    </div>
+
+    <!-- Add User (now with optional password) -->
+    <div class="user-form">
+      <input id="newName" type="text" placeholder="Name" />
+      <input id="newAge" type="number" placeholder="Age" min="5" max="120" />
+      <input id="newGoal" type="number" placeholder="Goal (ml)" min="500" max="10000" />
+
+      <!-- NEW: password (optional) -->
+      <input id="newPass" type="password" placeholder="Password (optional)" />
+      <input id="newPass2" type="password" placeholder="Confirm Password (optional)" />
+
+      <button id="addUserBtn" class="btn add">Add User</button>
+    </div>
+
+    <!-- Users List -->
+    <div id="usersList" class="users-list">Loading...</div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="users.js"></script>
+</body>
+</html>

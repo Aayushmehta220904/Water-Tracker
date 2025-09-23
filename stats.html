@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Water Stats</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <style>
+    #user-badge { font-weight: 800; font-size: 15px; color: var(--accent); }
+    .stats-title { text-align: center; }
+    #goal-line  { font-size: 12px; color:#333; }
+  </style>
+</head>
+<body>
+  <!-- Background flourish -->
+  <div class="bg-bubbles"></div>
+
+  <div class="stats-container">
+    <!-- Top Bar (match Home) -->
+    <div class="stats-top" style="justify-content: space-between; align-items: flex-start;">
+      <div class="date-stat">
+        <span id="today-date"></span><br>
+        <span id="user-badge"></span><br>
+        <span id="goal-line"></span>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <a href="users.html" class="btn home-link">Switch User</a>
+        <a href="index.html" class="btn home-link">Home</a>
+      </div>
+    </div>
+
+    <h2 class="stats-title" style="margin-top: 2px; margin-bottom: 8px;">📊 Water Stats</h2>
+
+    <div class="stat-cards">
+      <div class="stat-card">
+        <h3>Weekly Average (This Week)</h3>
+        <div class="stat-value"><span id="weekly-avg">0</span> ml/day</div>
+        <div id="weekly-range" style="font-size:12px;color:#444;margin-top:4px;"></div>
+      </div>
+      <div class="stat-card">
+        <h3>Monthly Average (This Month)</h3>
+        <div class="stat-value"><span id="monthly-avg">0</span> ml/day</div>
+        <div id="monthly-range" style="font-size:12px;color:#444;margin-top:4px;"></div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-block">
+        <p class="chart-title">This Week (Mon–Sun)</p>
+        <canvas id="weekly-chart"></canvas>
+      </div>
+      <div class="chart-block">
+        <p class="chart-title">This Month (Daily)</p>
+        <canvas id="monthly-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="stats.js"></script>
+
+  <!-- Date + user + goal/streak line -->
+  <script>
+    document.getElementById("today-date").textContent = new Date().toLocaleDateString("en-GB", {
+      weekday: "short", day: "numeric", month: "short", year: "numeric"
+    });
+
+    window.firebaseReady.then(async () => {
+      try {
+        const sel = JSON.parse(localStorage.getItem("selectedUser"));
+        if (!sel) return;
+        const doc = await db.collection("users").doc(sel.id).get();
+        if (!doc.exists) return;
+        const u = doc.data();
+        const ageText = u.age ? ` (Age ${u.age})` : "";
+        document.getElementById("user-badge").textContent = `User: ${u.name}${ageText}`;
+        const goal = u.goalMl ?? 3000;
+        const streak = u.streak ?? 0;
+        const best = u.bestStreak ?? 0;
+        document.getElementById("goal-line").textContent = `Goal: ${goal} ml • 🔥 Streak: ${streak} • Best: ${best}`;
+      } catch(e) { console.error(e); }
+    });
+  </script>
+</body>
+</html>

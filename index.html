@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Water Tracker</title>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- SweetAlert used elsewhere; harmless to keep globally -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    #user-badge { font-weight: 800; font-size: 15px; color: var(--accent); }
+    #goal-line  { font-size: 12px; color:#333; }
+  </style>
+</head>
+<body>
+  <!-- Background flourish -->
+  <div class="bg-bubbles"></div>
+
+  <div class="app-shell">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="date-stat">
+        <span id="today-date"></span><br>
+        <span id="user-badge"></span><br>
+        <span id="goal-line"></span>
+      </div>
+      <div class="top-right-controls">
+        <a class="btn stats-link" href="stats.html">Stats</a>
+        <a class="btn home-link" href="users.html">Switch User</a>
+        <button class="btn reset" onclick="resetToday()">Reset</button>
+        <button class="btn delete" onclick="deleteAll()">Delete All</button>
+      </div>
+    </div>
+
+    <!-- Card -->
+    <div class="card">
+      <h1>💧 Water Tracker 💧</h1>
+
+      <!-- Glasses -->
+      <div class="glass-row" id="glass-row"></div>
+
+      <!-- Total Intake -->
+      <p class="total-water-text">
+        <strong>Total Intake:</strong> <span id="total-water">0</span> ml
+      </p>
+
+      <!-- Predefined Buttons -->
+      <div class="buttons predefined-buttons">
+        <button onclick="addWater(100)">+100ml</button>
+        <button onclick="addWater(250)">+250ml</button>
+        <button onclick="addWater(500)">+500ml</button>
+        <button onclick="addWater(1000)">+1L</button>
+      </div>
+
+      <!-- Custom Add -->
+      <div class="custom-add">
+        <input type="number" id="custom-amount" placeholder="Custom amount (ml)"/>
+        <button onclick="addCustom()">Add</button>
+      </div>
+    </div>
+
+    <footer class="footer-note">
+      Built by Aayush • Stay hydrated 🫶
+    </footer>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <!-- Config + App logic -->
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
