@@ -3,29 +3,24 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Add or Select User 🧍🏻🧍🏻‍♀️ • Water Tracker</title>
+  <title>💧 Add or Select User 🧍🏻🧍🏻‍♀️</title>
   <link rel="stylesheet" href="style.css"/>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <!-- Background flourish -->
   <div class="bg-bubbles"></div>
 
   <div class="users-container">
     <div class="users-top center-title">
-      <h2 class="users-title">Add or Select User 🧍🏻🧍🏻‍♀️</h2>
+      <h2 class="users-title">💧 Add or Select User 🧍🏻🧍🏻‍♀️</h2>
     </div>
 
-    <!-- Add User (now with optional password) -->
+    <!-- Add User -->
     <div class="user-form">
-      <input id="newName" type="text" placeholder="Name" />
-      <input id="newAge" type="number" placeholder="Age" min="5" max="120" />
-      <input id="newGoal" type="number" placeholder="Goal (ml)" min="500" max="10000" />
-
-      <!-- NEW: password (optional) -->
-      <input id="newPass" type="password" placeholder="Password (optional)" />
-      <input id="newPass2" type="password" placeholder="Confirm Password (optional)" />
-
+      <input id="newName" type="text" placeholder="Name" required />
+      <input id="newDob" type="date" required />
+      <input id="newGoal" type="number" placeholder="Goal (ml)" min="500" max="10000" required />
+      <input id="newPassword" type="password" placeholder="Password (optional)" />
       <button id="addUserBtn" class="btn add">Add User</button>
     </div>
 
