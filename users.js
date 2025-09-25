@@ -1,4 +1,4 @@
-// users.js — User management with DOB (required) + optional Password + SweetAlert2 + password check for all actions
+// users.js — User management with DOB (required) + optional Password + SweetAlert2 + password check
 
 function $(id){ return document.getElementById(id); }
 
@@ -21,7 +21,7 @@ async function addUser(name, dob, goalMl, password) {
     name: name.trim(),
     dob: dob,
     goalMl: Number(goalMl),
-    password: password || null,
+    password: password && password.trim() !== "" ? password : null,
     streak: 0,
     bestStreak: 0,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -33,7 +33,7 @@ async function addUser(name, dob, goalMl, password) {
 async function updateGoal(userId, goalMl){ await db.collection("users").doc(userId).update({ goalMl:Number(goalMl) }); }
 async function updateDob(userId, dob){ await db.collection("users").doc(userId).update({ dob }); }
 async function renameUser(userId, name){ await db.collection("users").doc(userId).update({ name:name.trim() }); }
-async function updatePassword(userId, password){ await db.collection("users").doc(userId).update({ password: password || null }); }
+async function updatePassword(userId, password){ await db.collection("users").doc(userId).update({ password: password && password.trim() !== "" ? password : null }); }
 
 async function deleteUser(userId){
   await window.firebaseReady;
@@ -53,7 +53,7 @@ async function fetchUsers(){
 
 // 🔐 Password check helper
 async function verifyPassword(u) {
-  if (!u.password) return true; // no password set
+  if (!u.password || u.password.trim() === "") return true; // no password set
   const { value: pw } = await Swal.fire({
     title: "Enter Password",
     input: "password",
@@ -69,7 +69,7 @@ async function verifyPassword(u) {
 function userCard(u){
   const card=document.createElement("div"); card.className="user-card";
   const age=calcAge(u.dob);
-  const lock = u.password ? "🔒" : "🔓";
+  const lock = (u.password && u.password.trim() !== "") ? "🔒" : "🔓";
   card.innerHTML=`
     <div class="user-name">${u.name} ${lock}</div>
     <div class="user-age">DOB: ${u.dob} • Age: ${age ?? "—"} • Goal: ${u.goalMl} ml</div>

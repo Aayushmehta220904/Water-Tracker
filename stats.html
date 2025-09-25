@@ -24,8 +24,16 @@
 
     <h2 class="stats-title">📊 Water Stats</h2>
     <div class="stat-cards">
-      <div class="stat-card"><h3>Weekly Avg</h3><div class="stat-value"><span id="weekly-avg">0</span> ml/day</div><span id="weekly-range"></span></div>
-      <div class="stat-card"><h3>Monthly Avg</h3><div class="stat-value"><span id="monthly-avg">0</span> ml/day</div><span id="monthly-range"></span></div>
+      <div class="stat-card">
+        <h3>Weekly Avg</h3>
+        <div class="stat-value"><span id="weekly-avg">0</span> ml/day</div>
+        <span id="weekly-range"></span>
+      </div>
+      <div class="stat-card">
+        <h3>Monthly Avg</h3>
+        <div class="stat-value"><span id="monthly-avg">0</span> ml/day</div>
+        <span id="monthly-range"></span>
+      </div>
     </div>
     <div class="charts-grid">
       <div class="chart-block"><canvas id="weekly-chart"></canvas></div>
@@ -33,9 +41,11 @@
     </div>
   </div>
 
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
   <script src="firebase-config.js"></script>
   <script src="stats.js"></script>
   <script>
@@ -53,7 +63,7 @@
       const doc=await db.collection("users").doc(sel.id).get();
       if(doc.exists){
         const u=doc.data();
-        const lock = u.password ? "🔒" : "🔓";
+        const lock = (u.password && u.password.trim() !== "") ? "🔒" : "🔓";
         document.getElementById("user-badge").textContent=`User: ${u.name} ${lock} (Age ${calcAge(u.dob)??"—"})`;
       }
     });
